@@ -11,3 +11,12 @@ finally bras-report.sh collect data from radius.ou(online users) and bras sensor
 
 For doing this project faster I use pypy to run python code faster than usual.
 
+How to config:
+
+1- Bras_sensor:
+
+Please configure yout Bras to send their logs by syslog format to their bras_sensor (TCP or UDP port: 514), you need to configure Rsyslog to listen to port 514.
+
+by using cgnat.conf file and copy it to /etc/rsyslog/conf.d/ Rsyslog parse logs(in this case Cisco Nat log format) and store them into /srv/log/cgnat/year.
+
+Bras.py
