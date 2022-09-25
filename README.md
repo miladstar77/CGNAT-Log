@@ -1,4 +1,5 @@
 # CGNAT_Log
+NOTE: ********* this document has not completed yet ********
 To collect CGNAT logs and store them into DB.
 
 In this project we have Radius servers for AAA and Brases as ras. Also we need some servers to collect logs and parse them into our suitable data type and human readable and store them in clickhouse database.
