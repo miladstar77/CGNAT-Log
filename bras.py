@@ -1,4 +1,3 @@
-#Shatel R&D Team v0.7.1
 from datetime import datetime, timedelta
 from os import listdir, system, replace, makedirs, remove, path
 import csv
