@@ -23,9 +23,13 @@ Please configure Bras to send logs by Syslog format to bras_sensor (TCP or UDP p
 
 by using cgnat.conf file and copy it to /etc/rsyslog/conf.d/ Rsyslog parse logs(in this case Cisco Nat log format) and store them into /srv/log/cgnat/year.
 
-bras.py will open saved logs and connects to radius DB (online users table) then save final file into /root/bras/bras-report and Main DB on database server. (you can have some main DB based on your data size)
+bras.py will open saved logs and connects to radius DB (online users table) then save the final file into /root/bras/bras-report and Main DB on the database server. (you can have more than one main DB, based on your data size)
 
 crontab runs bras.py.
+*/2 * * * * root python3 /root/bras/bras.py &> /dev/null
+use these crons to remove old files(you can change time and directories):
+2 3 * * * root echo "$(du -sh)" > /root/bras/rsyslog-backup.txt && find /srv/log/cgnat/sent/$(date \+\%Y)/ -ctime +1 -delete
+3 2 * * * root echo "$(du -sh)" > /root/bras/report.txt && find /root/bras/bras-report/ -ctime +1 -delete
 
 2- Radius_Sensor:
 
