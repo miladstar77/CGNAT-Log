@@ -2,11 +2,11 @@
 
 NOTE: ********* this document has not completed yet ********
 
-To collect CGNAT logs and store them in DB.
+To collect CGNAT logs and store them in DB to search and find specific data faster.
 
-In this project Radius servers for AAA and Brases as ras. Also, we need some servers to collect logs and parse them into our appropriate data type, human-readable and store them in the clickhouse database.
+In this project, Radius servers are used for AAA and Brases as ras. Also, we need some servers to collect logs and parse them into our appropriate data type, human-readable and store them in the clickhouse database.
 
-Our users connect to Brases and we send Bras log's to sensors called bras_sensor, each Bras has one sensor to collect Bras logs by Rsyslog  and parse its logs.
+Our users connect to Bras and Bras sends logs to its sensor called bras_sensor, each Bras has one sensor to collect Bras logs by Rsyslog and parse its logs.
 
 Another sensor called Radius_sensor sniffs Radius traffic and store them by Tcpdump, then parse and extracts some data from radius attributes and stores them into radius DB called online user.
 
