@@ -5,7 +5,7 @@ DIR="/root/cgnat/report/"
 SCR_T_START=$(date +%s)
 START=$(date -d '20 minute  ago'  '+%Y-%m-%d %H:%M:00')
 STOP=$(date -d '16  minute ago' '+%Y-%m-%d %H:%M:59')
-FILE=$(echo $(date -d "20 minutes ago" +"%Y%m%d%H%M")_3_shatel.csv)
+FILE=$(echo $(date -d "20 minutes ago" +"%Y%m%d%H%M")_some_name.csv)
 FTP_DIR=$(echo ${FILE:0:8})
 #echo $FILE $START $STOP
 
