@@ -51,7 +51,7 @@ def rad_db(log_dir):
             t2 = datetime.strptime(t2, "%Y-%m-%d %H:%M:%S")
             #print("file {} between {} <> {}".format(b_file, t1, t2))
             syslog.syslog("file {} between {} <> {}".format(b_file, t1, t2))
-            if (system("clickhouse-client -d radius -q \"select * from ou  where bras like '{}' and time between '{}' and '{}' Format CSV\" > {}/{}".format(bras_name, t1, t2, rad_files, b_file))) != 0 :
+            if (system("clickhouse-client -d radius -q \"select * from onlineuser  where bras like '{}' and time between '{}' and '{}' Format CSV\" > {}/{}".format(bras_name, t1, t2, rad_files, b_file))) != 0 :
                 syslog.syslog("Clickhouse Error:  Unable to Fetch Data From Radius DB (radius.ou) For {}".format(b_file))
             else :
                 syslog.syslog("Fetch data From Radius DB For  {} : Success".format(b_file))
@@ -87,7 +87,7 @@ def report(log_dir):
                     rad =online.get(row[2])
                     #print("{},{},{},{},{},{},{},{},{},{},{}".format(rad[0], rad[1], row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
                     report.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(rad[0], rad[1], row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
-                else:
+                #else:
                     #print("{} not found ".format(row[2]))
                     #rad = client.execute("select * from ou where sip = {} limit 1".format(row[2]))
                     #print("rad orginal",rad)
@@ -98,7 +98,7 @@ def report(log_dir):
                         #mac = rad[3]
                         #print(uname, mac)
                         #report.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(uname, mac ,row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
-                    report.write("0,Not Found,{},{},{},{},{},{},{},{},{}\n".format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
+                    #report.write("0,Not Found,{},{},{},{},{},{},{},{},{}\n".format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
                 #break
         report.close()
 
@@ -107,7 +107,7 @@ def send2db(bras_dir):
     db_report = "{}/{}".format(bras_dir, scrtime)
     db_list = listdir(db_report)
     for report_file in db_list:
-        if (system("clickhouse-client -d cgnat -q \"insert into  nat  Format CSV\" <  {}/{}".format(db_report, report_file))) != 0:
+        if (system("clickhouse-client -h remote-DB-ip-Address --password DB-password -d cgnat -q \"insert into  nat  Format CSV\" <  {}/{}".format(db_report, report_file))) != 0:
             syslog.syslog("Clickhouse Error : Unable To Send {} To DB cgnat.nat".format(report_file))
         else:
             syslog.syslog("Sending {} To DB cgnat.nat : Success ".format(report_file))
