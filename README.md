@@ -51,8 +51,8 @@ to run scripts automatically do like this:
 crontab runs bras.py and others clears old files:
 ```
 */2 * * * * root python3 /root/bras/bras.py &> /dev/null
-2 3 * * * root echo "$(du -sh)" > ~/bras/rsyslog-backup.txt && find /srv/log/cgnat/sent/$(date \+\%Y)/ -ctime +1 -delete
-3 2 * * * root echo "$(du -sh)" > ~/bras/report.txt && find ~/bras/bras-report/ -ctime +1 -delete
+2 3 * * * root echo "$(du -sh)" > /root/bras/rsyslog-backup.txt && find /srv/log/cgnat/sent/$(date \+\%Y)/ -ctime +1 -delete
+3 2 * * * root echo "$(du -sh)" > /root/bras/report.txt && find /root/bras/bras-report/ -ctime +1 -delete
 ```
 ### 2- Radius_Sensor:
 
@@ -105,11 +105,12 @@ mkdir /tmp/old-pcap
 ````
 everything is scheduled by crontab.
 ```
-*/2 * * * * root pypy3 ~/radius/online-user.py &> /dev/null
-1 3 * * * root echo "$(du -sh /tmp/old-pcap| cut -f1)" > ~/radius/old-pcap-removed-size.txt && find /tmp/old-pcap -ctime  +1 -delete
-1 2 * * * root echo "$(du -sh ~/radius/parsed-file | cut -f1)" > ~/radius/parsed-file-removed-size.txt && find ~/radius/parsed-file -ctime +2 -delete
-0 3 * * * root ~/scripts/radiusDB.sh
-@reboot root ~/scripts/pcap-screen.sh
+#radius sniffer
+*/2 * * * * root pypy3 /root/radius/online-user.py &> /dev/null
+1 3 * * * root echo "$(du -sh /tmp/old-pcap| cut -f1)" > /root/radius/old-pcap-removed-size.txt && find /tmp/old-pcap -ctime  +1 -delete
+1 2 * * * root echo "$(du -sh /root/radius/parsed-file | cut -f1)" > /root/radius/parsed-file-removed-size.txt && find /root/radius/parsed-file -ctime +2 -delete
+0 3 * * * root /root/scripts/radiusDB.sh
+#@reboot root /root/scripts/pcap-screen.sh
 ```
 
 
