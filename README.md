@@ -140,7 +140,6 @@ cp extract.sh to /root/cgnat
 cron tabs:
 ```
 #radius
-0 3 * * * root /root/scripts/free-radius.sh
-#final report
-*/1 * * * * root /root/cgnat-report/extract.sh
+*/5 * * * * root /root/cgnat/extract.sh &> /root/cgnat/log.txt
+1   2 * * * root echo $(du -sh /root/cgnat/report) > /root/cgnat/report-size.txt  && find /root/cgnat/report/ -ctime +15 -delete
 ```
